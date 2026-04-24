@@ -23,7 +23,7 @@ class Car(Vehicle):
          self.doors= int(doors)
          
     def __str__(self):
-        return str(self.vid)+"," + str(self.model)+"," +str(self.year)+"," +str(self.fuel_type)+"," +str(self.doors)
+        return "[Car] VID: " + str(self.vid)+" | " + str(self.model)+" (" +str(self.year)+") | Fuel: " +str(self.fuel_type)+ " | " +str(self.doors)+" Doors"
   
   
   
@@ -35,7 +35,7 @@ class Truck(Vehicle):
          self.axles= int(axles)
          
     def __str__(self):
-        return str(self.vid)+"," + str(self.model)+"," +str(self.year)+"," +str(self.max_load)+" kg ," +str(self.axles)
+        return "[Truck] VID: " + str(self.vid)+" | " + str(self.model)+" (" +str(self.year)+") | Load: " +str(self.max_load)+" kg | " +str(self.axles)+ " Axles"
         
         
         
@@ -46,7 +46,7 @@ class Motorcycle(Vehicle):
          self.v_type= v_type
          
     def __str__(self):
-        return str(self.vid)+"," + str(self.model)+"," +str(self.year)+"," +str(self.engine_cc)+"," +str(self.v_type)
+        return "[Motorcycle] VID: "+ str(self.vid)+" | " + str(self.model)+" (" +str(self.year)+") | Eng: " +str(self.engine_cc)+"cc | Type: " +str(self.v_type)
         
     
         
@@ -110,4 +110,20 @@ motor2 = Motorcycle("M002", "Harley Davidson" ,2015, 1200, "Cruiser")
 vehicles= [car1,truck1, motor1, car2,truck2, motor2]
 
 save_fleet_to_file(vehicles, "fleet.txt")
-load_fleet_from_file("fleet.txt")
+print("Loading fleet data from 'fleet.txt'...")
+loaded_vehicles = load_fleet_from_file("fleet.txt")
+print(str(len(loaded_vehicles))+ " vehicles loaded successfully.")
+
+print("\n--- All Vehicles ---")
+for v in loaded_vehicles:
+    print( v)
+
+print("\n--- Recent Vehicles (Last 4 Years) ---")
+for v in loaded_vehicles:
+    if v.is_new(4):
+        print(v)
+        
+print("\n--- Electric Cars Only ---")
+for v in loaded_vehicles:
+    if type(v)== Car and v.fuel_type== "Electric":
+        print(v)
